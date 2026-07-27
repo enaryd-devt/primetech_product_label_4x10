@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="paperformat_product_label_custom" model="report.paperformat">
-        <field name="name">PrimeTech Product Labels A4</field>
+        <field name="name">Étiquettes produits PrimeTech A4</field>
         <field name="default" eval="False"/>
         <field name="format">A4</field>
         <field name="orientation">Portrait</field>

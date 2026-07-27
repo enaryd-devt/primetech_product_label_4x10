@@ -5,7 +5,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     def action_open_barcode_label_layout(self):
-        """Open the independent PrimeTech label wizard."""
+        """Ouvre l'assistant indépendant d'étiquettes PrimeTech."""
         products = self
         if not products:
             products = self.browse(self.env.context.get("active_ids", []))
@@ -14,7 +14,7 @@ class ProductTemplate(models.Model):
         )
         return {
             "type": "ir.actions.act_window",
-            "name": _("Print Barcodes"),
+            "name": _("Imprimer les codes-barres"),
             "res_model": "primetech.product.label.layout",
             "res_id": wizard.id,
             "view_mode": "form",

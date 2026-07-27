@@ -4,7 +4,7 @@
         <field name="name">primetech.product.label.layout.form</field>
         <field name="model">primetech.product.label.layout</field>
         <field name="arch" type="xml">
-            <form string="Print Barcodes">
+            <form string="Imprimer les codes-barres">
                 <group>
                     <group>
                         <field name="quantity"/>
@@ -17,8 +17,8 @@
                     </group>
                 </group>
                 <footer>
-                    <button name="action_print" string="Confirm" type="object" class="btn-primary" data-hotkey="q"/>
-                    <button string="Cancel" special="cancel" class="btn-secondary" data-hotkey="x"/>
+                    <button name="action_print" string="Confirmer et télécharger le PDF" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Annuler" special="cancel" class="btn-secondary" data-hotkey="x"/>
                 </footer>
             </form>
         </field>

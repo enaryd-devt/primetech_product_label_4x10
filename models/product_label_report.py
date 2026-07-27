@@ -3,7 +3,7 @@ from odoo import api, models
 
 class ReportProductLabelCustom(models.AbstractModel):
     _name = "report.primetech_product_label_4x10.report_product_label_custom"
-    _description = "PrimeTech Product Labels"
+    _description = "Étiquettes produits PrimeTech"
 
     @api.model
     def _get_report_values(self, docids, data=None):
@@ -52,5 +52,8 @@ class ReportProductLabelCustom(models.AbstractModel):
             "price_included": "xprice" in wizard.print_format,
             "prices": prices,
             "currencies": currencies,
-            "label_height_mm": (291 - (rows - 1)) / rows,
+            # La zone imprimable fait 291 mm (A4 moins 3 mm en haut et en bas).
+            # border-spacing ajoute un espace avant/après chaque ligne : le
+            # retirer ici garantit qu'une planche complète tient sur une page.
+            "label_height_mm": (291 - (rows + 1)) / rows,
         }
