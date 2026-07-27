@@ -11,13 +11,13 @@
                                 <t t-foreach="label_row" t-as="product">
                                     <td t-att-style="'box-sizing: border-box; height: %.2fmm !important; border: 1px solid #333 !important; outline: 1px solid #333; outline-offset: -1px; border-radius: 0.6mm; padding: 1mm !important; page-break-inside: avoid !important; text-align: center; vertical-align: middle !important; overflow: hidden; word-break: break-word;' % label_height_mm">
                                         <t t-if="product">
-                                            <div style="font-size: 9pt; font-weight: 700; line-height: 1.1; max-height: 7mm; overflow: hidden;">
+                                            <div style="color: #444; font-size: 7.5pt; font-weight: 600; line-height: 1.05; max-height: 6mm; overflow: hidden;">
                                                 <span t-field="product.name"/>
                                             </div>
                                             <div t-if="product.default_code" style="font-size: 7pt; margin-top: 0.6mm;">
                                                 Réf. : <span t-field="product.default_code"/>
                                             </div>
-                                            <div t-if="price_included" style="font-size: 9pt; font-weight: 700; margin-top: 0.8mm;">
+                                            <div t-if="price_included" style="background: #f2f2f2; border: 0.3mm solid #222; border-radius: 0.8mm; color: #111; display: inline-block; font-size: 11.5pt; font-weight: 900; line-height: 1; margin-top: 0.8mm; padding: 0.7mm 1.4mm; white-space: nowrap;">
                                                 <span t-out="prices[product.id]" t-options="{'widget': 'monetary', 'display_currency': currencies[product.id]}"/>
                                             </div>
                                             <div t-if="product.barcode" style="margin-top: 0.8mm; text-align: center;">
