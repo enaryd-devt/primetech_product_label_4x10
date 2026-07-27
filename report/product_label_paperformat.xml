@@ -8,6 +8,7 @@
         <field name="margin_top">3</field><field name="margin_bottom">3</field>
         <field name="margin_left">3</field><field name="margin_right">3</field>
         <field name="header_line" eval="False"/><field name="header_spacing">0</field><field name="dpi">90</field>
+        <field name="disable_shrinking" eval="True"/>
     </record>
     <record id="paperformat_product_label_a5" model="report.paperformat">
         <field name="name">Étiquettes produits PrimeTech A5</field>
@@ -15,6 +16,7 @@
         <field name="margin_top">3</field><field name="margin_bottom">3</field>
         <field name="margin_left">3</field><field name="margin_right">3</field>
         <field name="header_line" eval="False"/><field name="header_spacing">0</field><field name="dpi">90</field>
+        <field name="disable_shrinking" eval="True"/>
     </record>
     <record id="paperformat_product_label_a6" model="report.paperformat">
         <field name="name">Étiquettes produits PrimeTech A6</field>
@@ -22,6 +24,7 @@
         <field name="margin_top">3</field><field name="margin_bottom">3</field>
         <field name="margin_left">3</field><field name="margin_right">3</field>
         <field name="header_line" eval="False"/><field name="header_spacing">0</field><field name="dpi">90</field>
+        <field name="disable_shrinking" eval="True"/>
     </record>
     <record id="paperformat_product_label_a7" model="report.paperformat">
         <field name="name">Étiquettes produits PrimeTech A7</field>
@@ -29,5 +32,6 @@
         <field name="margin_top">3</field><field name="margin_bottom">3</field>
         <field name="margin_left">3</field><field name="margin_right">3</field>
         <field name="header_line" eval="False"/><field name="header_spacing">0</field><field name="dpi">90</field>
+        <field name="disable_shrinking" eval="True"/>
     </record>
 </odoo>
