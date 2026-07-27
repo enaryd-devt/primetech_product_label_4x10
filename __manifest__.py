@@ -9,10 +9,7 @@
     "author": "PrimeTech",
     "license": "LGPL-3",
     "depends": ["product"],
-    "data": [
-        "report/product_label_paperformat.xml",
-        "report/product_label_report.xml",
-    ],
+    "data": [],
     "installable": True,
     "application": False,
 }

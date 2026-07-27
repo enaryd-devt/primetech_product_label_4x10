@@ -19,14 +19,12 @@ class ProductLabelLayout(models.TransientModel):
 
         Odoo's base implementation prepares the products and quantities, but
         it also derives ``product.report_product_template_label_4x10`` from the
-        new format. That external ID does not exist in the product module, so
-        the custom action must replace it before ``process`` resolves it.
+        new format. That external ID does not exist. Reusing Odoo's installed
+        4x7 action avoids depending on an XML ID whose module prefix changes
+        when the add-on directory is renamed during extraction.
         """
         xml_id, data = super()._prepare_report_data()
         if self.print_format == "4x10xprice":
-            xml_id = (
-                "primetech_product_label_4x10."
-                "action_report_product_label_4x10_price"
-            )
+            xml_id = "product.report_product_template_label_4x7"
             data.update(columns=4, rows=10, price_included=True)
         return xml_id, data
