@@ -17,11 +17,16 @@ class ProductLabelLayout(models.TransientModel):
     def _prepare_report_data(self):
         """Set the dimensions expected by Odoo's standard label report.
 
-        Odoo's base implementation parses the selection key and prepares the
-        products and quantities. Keeping its report action is important: that
-        action is connected to Odoo's report model and label paper format.
+        Odoo's base implementation prepares the products and quantities, but
+        it also derives ``product.report_product_template_label_4x10`` from the
+        new format. That external ID does not exist in the product module, so
+        the custom action must replace it before ``process`` resolves it.
         """
         xml_id, data = super()._prepare_report_data()
         if self.print_format == "4x10xprice":
+            xml_id = (
+                "primetech_product_label_4x10."
+                "action_report_product_label_4x10_price"
+            )
             data.update(columns=4, rows=10, price_included=True)
         return xml_id, data

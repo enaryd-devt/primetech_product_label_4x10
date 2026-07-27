@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- The standard template renders the product name, barcode and sales
-         price. This action replaces its paper format to fill the A4 sheet. -->
+    <!-- Keep the standard report_name so Odoo's product-label report model
+         continues to prepare product names, barcodes, quantities and prices. -->
     <record id="action_report_product_label_4x10_price" model="ir.actions.report">
         <field name="name">Product labels 4 x 10 with price</field>
         <field name="model">product.template</field>
@@ -9,6 +9,6 @@
         <field name="report_name">product.report_producttemplatelabel</field>
         <field name="report_file">product.report_producttemplatelabel</field>
         <field name="paperformat_id" ref="paperformat_product_label_4x10"/>
-        <field name="print_report_name">'Product Labels 4x10 - %s' % (object.display_name if object else '')</field>
+        <field name="print_report_name">'Product Labels 4x10'</field>
     </record>
 </odoo>
