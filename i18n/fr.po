@@ -13,8 +13,3 @@ msgstr ""
 #: model:ir.model.fields.selection,name:primetech_product_label_4x10.selection__product_label_layout__print_format__4x10xprice
 msgid "4 x 10 with price"
 msgstr "4 x 10 avec prix"
-
-#. module: primetech_product_label_4x10
-#: model:ir.actions.report,name:primetech_product_label_4x10.action_report_product_label_4x10_price
-msgid "Product labels 4 x 10 with price"
-msgstr "Étiquettes produit 4 x 10 avec prix"

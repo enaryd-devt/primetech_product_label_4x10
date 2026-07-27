@@ -15,18 +15,13 @@ class ProductLabelLayout(models.TransientModel):
     )
 
     def _prepare_report_data(self):
-        """Use the zero-margin report action for the custom label format.
+        """Set the dimensions expected by Odoo's standard label report.
 
         Odoo's base implementation parses the selection key and prepares the
-        4-column/10-row grid as well as ``price_included``. Keeping that logic
-        in the base module preserves product-variant and quantity support.
+        products and quantities. Keeping its report action is important: that
+        action is connected to Odoo's report model and label paper format.
         """
         xml_id, data = super()._prepare_report_data()
         if self.print_format == "4x10xprice":
-            xml_id = (
-                "primetech_product_label_4x10."
-                "action_report_product_label_4x10_price"
-            )
-            # Keep the custom layout stable if the base parser changes later.
             data.update(columns=4, rows=10, price_included=True)
         return xml_id, data

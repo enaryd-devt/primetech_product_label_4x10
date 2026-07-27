@@ -6,10 +6,9 @@
     "author": "PrimeTech",
     "license": "LGPL-3",
     "depends": ["product"],
-    "data": [
-        "report/product_label_paperformat.xml",
-        "report/product_label_report.xml",
-    ],
+    # Odoo's product-label report already uses its dedicated A4 paper format.
+    # Not creating a second action also avoids duplicate report-name lookups.
+    "data": [],
     "installable": True,
     "application": False,
 }
