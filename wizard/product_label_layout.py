@@ -19,12 +19,13 @@ class ProductLabelLayout(models.TransientModel):
 
         Odoo's base implementation prepares the products and quantities, but
         it also derives ``product.report_product_template_label_4x10`` from the
-        new format. That external ID does not exist. Reusing Odoo's installed
-        4x7 action avoids depending on an XML ID whose module prefix changes
-        when the add-on directory is renamed during extraction.
+        new format. That external ID does not exist. Odoo's 4x7 action also
+        clamps the page to seven rows, even when ``rows`` is supplied in the
+        report data. The installed 4x12 action supports more than ten rows; the
+        explicit ``rows=10`` below then sets the required page capacity.
         """
         xml_id, data = super()._prepare_report_data()
         if self.print_format == "4x10xprice":
-            xml_id = "product.report_product_template_label_4x7"
+            xml_id = "product.report_product_template_label_4x12"
             data.update(columns=4, rows=10, price_included=True)
         return xml_id, data
