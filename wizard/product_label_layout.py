@@ -1,31 +1,47 @@
-from odoo import fields, models
+from odoo import _, fields, models
+from odoo.exceptions import UserError
 
 
-class ProductLabelLayout(models.TransientModel):
-    """Add a 4 by 10, price-bearing layout to Odoo's label wizard."""
+class PrimetechProductLabelLayout(models.TransientModel):
+    """Independent quantity and format wizard for PrimeTech labels."""
 
-    _inherit = "product.label.layout"
+    _name = "primetech.product.label.layout"
+    _description = "PrimeTech Product Label Layout"
 
+    quantity = fields.Integer(string="Quantity per product", default=1, required=True)
     print_format = fields.Selection(
-        selection_add=[("4x10xprice", "4 x 10 with price")],
-        # This is a transient wizard: deleting its rows is the only reliable
-        # uninstall policy. ``set default`` prevents the registry from loading
-        # on Odoo releases where print_format has no model-level default.
-        ondelete={"4x10xprice": "cascade"},
+        [
+            ("dymo", "Dymo"),
+            ("2x7xprice", "2 x 7 with price"),
+            ("4x7xprice", "4 x 7 with price"),
+            ("4x12", "4 x 12"),
+            ("4x12xprice", "4 x 12 with price"),
+            ("zpl", "ZPL Labels"),
+            ("zplxprice", "ZPL Labels with price"),
+            ("4x10xprice", "4 x 10 with price"),
+        ],
+        string="Format",
+        default="4x10xprice",
+        required=True,
     )
+    product_tmpl_ids = fields.Many2many(
+        "product.template",
+        string="Products",
+        required=True,
+    )
+    pricelist_id = fields.Many2one("product.pricelist", string="Pricelist")
+    extra_html = fields.Html(string="Additional content")
 
-    def _prepare_report_data(self):
-        """Set the dimensions expected by Odoo's standard label report.
-
-        Odoo's base implementation prepares the products and quantities, but
-        it also derives ``product.report_product_template_label_4x10`` from the
-        new format. That external ID does not exist. Odoo's 4x7 action also
-        clamps the page to seven rows, even when ``rows`` is supplied in the
-        report data. The installed 4x12 action supports more than ten rows; the
-        explicit ``rows=10`` below then sets the required page capacity.
-        """
-        xml_id, data = super()._prepare_report_data()
-        if self.print_format == "4x10xprice":
-            xml_id = "product.report_product_template_label_4x12"
-            data.update(columns=4, rows=10, price_included=True)
-        return xml_id, data
+    def action_print(self):
+        self.ensure_one()
+        if self.quantity <= 0:
+            raise UserError(_("The label quantity must be greater than zero."))
+        if not self.product_tmpl_ids:
+            raise UserError(_("Select at least one product."))
+        report = self.env["ir.actions.report"].search(
+            [("report_name", "=", "primetech_product_label_4x10.report_product_label_custom")],
+            limit=1,
+        )
+        if not report:
+            raise UserError(_("The PrimeTech label PDF report is not installed."))
+        return report.report_action(self, data={"wizard_id": self.id})

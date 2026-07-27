@@ -1,43 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Odoo's label renderer gives its table a physical width.  With some
-         wkhtmltopdf/Windows combinations that width starts at the left report
-         margin and overflows on the right.  Constraining the table to its page
-         makes the two side spaces equal without changing barcode alignment. -->
-    <template id="report_producttemplatelabel_center_4x10"
-              inherit_id="product.report_producttemplatelabel">
-        <xpath expr="//div[contains(@class, 'page')]" position="inside">
-            <t t-if="layout_wizard and layout_wizard.print_format == '4x10xprice'">
-                <style>
-                    .page {
-                        box-sizing: border-box;
-                        padding-left: 0 !important;
-                        padding-right: 0 !important;
-                    }
-                    .page &gt; table {
-                        box-sizing: border-box;
-                        left: 50%;
-                        margin-left: auto !important;
-                        margin-right: auto !important;
-                        position: relative;
-                        border-collapse: separate !important;
-                        border-spacing: 0.8mm 0.8mm !important;
-                        table-layout: fixed;
-                        -webkit-transform: translateX(-50%);
-                        transform: translateX(-50%);
-                        width: calc(100% - 8mm) !important;
-                    }
-                    .page &gt; table td {
-                        border: 0.2mm dashed #666 !important;
-                        padding: 1mm !important;
-                        vertical-align: middle !important;
-                    }
-                    .page &gt; table img[src*="/report/barcode"] {
-                        height: 9mm !important;
-                        max-width: 90% !important;
-                    }
-                </style>
+    <template id="report_product_label_custom">
+        <t t-call="web.basic_layout">
+            <t t-foreach="pages" t-as="page_rows">
+                <div class="page" style="margin: 0; padding: 0;">
+                    <table style="border-collapse: separate; border-spacing: 1mm; table-layout: fixed; width: 100%;">
+                        <t t-foreach="page_rows" t-as="label_row">
+                            <tr>
+                                <t t-foreach="label_row" t-as="product">
+                                    <td t-att-style="'height: %.2fmm; border: 0.2mm dashed #666; padding: 1.2mm; text-align: center; vertical-align: middle; overflow: hidden;' % label_height_mm">
+                                        <t t-if="product">
+                                            <div style="font-size: 9pt; font-weight: 700; line-height: 1.1; max-height: 7mm; overflow: hidden;">
+                                                <span t-field="product.name"/>
+                                            </div>
+                                            <div t-if="product.default_code" style="font-size: 7pt; margin-top: 0.6mm;">
+                                                Ref: <span t-field="product.default_code"/>
+                                            </div>
+                                            <div t-if="price_included" style="font-size: 9pt; font-weight: 700; margin-top: 0.8mm;">
+                                                <span t-out="prices[product.id]" t-options="{'widget': 'monetary', 'display_currency': currencies[product.id]}"/>
+                                            </div>
+                                            <div t-if="product.barcode" style="margin-top: 0.8mm; text-align: center;">
+                                                <img t-att-src="'/report/barcode/?barcode_type=Code128&amp;value=%s&amp;width=600&amp;height=180&amp;humanreadable=1' % product.barcode"
+                                                     style="height: 10mm; max-width: 95%;" alt="Barcode"/>
+                                            </div>
+                                            <div t-if="not product.barcode" style="font-size: 7pt; margin-top: 2mm;">No barcode</div>
+                                            <div t-if="wizard.extra_html" style="font-size: 7pt; margin-top: 0.5mm;">
+                                                <span t-field="wizard.extra_html"/>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
             </t>
-        </xpath>
+        </t>
     </template>
 </odoo>
