@@ -8,7 +8,10 @@ class ProductLabelLayout(models.TransientModel):
 
     print_format = fields.Selection(
         selection_add=[("4x10xprice", "4 x 10 with price")],
-        ondelete={"4x10xprice": "set default"},
+        # This is a transient wizard: deleting its rows is the only reliable
+        # uninstall policy. ``set default`` prevents the registry from loading
+        # on Odoo releases where print_format has no model-level default.
+        ondelete={"4x10xprice": "cascade"},
     )
 
     def _prepare_report_data(self):
