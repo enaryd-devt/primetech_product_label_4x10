@@ -12,14 +12,17 @@ class ReportProductLabelCustom(models.AbstractModel):
         wizard.ensure_one()
         layouts = {
             # format: (colonnes, lignes, hauteur imprimable en millimètres)
-            "dymo": (1, 1, 99.0),       # A7 : 105 - 2 x 3 mm
-            "2x7xprice": (2, 7, 204.0), # A5 : 210 - 2 x 3 mm
-            "4x7xprice": (4, 7, 291.0),
-            "4x12": (4, 12, 291.0),
-            "4x12xprice": (4, 12, 291.0),
-            "zpl": (1, 1, 142.5),       # A6 : 148,5 - 2 x 3 mm
-            "zplxprice": (1, 1, 142.5),
-            "4x10xprice": (4, 10, 291.0),
+            # Une réserve verticale est volontairement conservée pour les
+            # métriques internes de wkhtmltopdf. Sans elle, la dixième ligne
+            # A4 est repoussée sur une seconde page malgré les marges du papier.
+            "dymo": (1, 1, 88.0),
+            "2x7xprice": (2, 7, 190.0),
+            "4x7xprice": (4, 7, 270.0),
+            "4x12": (4, 12, 270.0),
+            "4x12xprice": (4, 12, 270.0),
+            "zpl": (1, 1, 130.0),
+            "zplxprice": (1, 1, 130.0),
+            "4x10xprice": (4, 10, 270.0),
         }
         columns, rows, page_height_mm = layouts[wizard.print_format]
         labels = [

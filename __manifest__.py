@@ -4,7 +4,7 @@
     # Keep the description in the manifest: the legacy repository README is
     # UTF-16 and must never be decoded by Odoo as the module description.
     "description": "Assistant français d'impression d'étiquettes produits professionnelles.",
-    "version": "18.0.4.2.0",
+    "version": "18.0.4.3.0",
     "category": "Sales/Products",
     "author": "PrimeTech",
     "license": "LGPL-3",

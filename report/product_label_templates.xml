@@ -4,12 +4,12 @@
         <t t-call="web.basic_layout">
             <t t-foreach="pages" t-as="page_rows">
                 <div class="page" t-attf-style="box-sizing: border-box; height: {{ '%.2f' % page_height_mm }}mm; margin: 0; padding: 0;">
-                    <table class="table table-bordered" t-attf-style="border-collapse: separate !important; border-spacing: 1mm !important; height: {{ '%.2f' % page_height_mm }}mm !important; margin: 0 !important; table-layout: fixed !important; width: 100% !important;">
+                    <table class="table table-bordered" t-attf-style="border-collapse: separate !important; border-spacing: 1mm !important; height: {{ '%.2f' % page_height_mm }}mm !important; margin: 0 !important; page-break-inside: avoid !important; table-layout: fixed !important; width: 100% !important;">
                         <tbody>
                         <t t-foreach="page_rows" t-as="label_row">
-                            <tr t-attf-style="height: {{ '%.2f' % label_height_mm }}mm !important;">
+                            <tr t-attf-style="height: {{ '%.2f' % label_height_mm }}mm !important; page-break-inside: avoid !important;">
                                 <t t-foreach="label_row" t-as="product">
-                                    <td t-att-style="'box-sizing: border-box; height: %.2fmm !important; border: 0.25mm dashed #555 !important; border-radius: 0.8mm; padding: 1.2mm !important; text-align: center; vertical-align: middle !important; overflow: hidden; word-break: break-word;' % label_height_mm">
+                                    <td t-att-style="'box-sizing: border-box; height: %.2fmm !important; border: 1px solid #333 !important; outline: 1px solid #333; outline-offset: -1px; border-radius: 0.6mm; padding: 1mm !important; page-break-inside: avoid !important; text-align: center; vertical-align: middle !important; overflow: hidden; word-break: break-word;' % label_height_mm">
                                         <t t-if="product">
                                             <div style="font-size: 9pt; font-weight: 700; line-height: 1.1; max-height: 7mm; overflow: hidden;">
                                                 <span t-field="product.name"/>
