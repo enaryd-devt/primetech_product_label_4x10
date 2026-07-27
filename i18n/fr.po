@@ -13,3 +13,8 @@ msgstr ""
 #: model:ir.model.fields.selection,name:primetech_product_label_4x10.selection__product_label_layout__print_format__4x10xprice
 msgid "4 x 10 with price"
 msgstr "4 x 10 avec prix"
+
+#. module: primetech_product_label_4x10
+#: model_terms:ir.ui.view,arch_db:primetech_product_label_4x10.product_template_form_barcode_print
+msgid "Print Barcodes"
+msgstr "Imprimer les codes-barres"
