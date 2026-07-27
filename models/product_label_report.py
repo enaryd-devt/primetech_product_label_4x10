@@ -10,17 +10,18 @@ class ReportProductLabelCustom(models.AbstractModel):
         data = data or {}
         wizard = self.env["primetech.product.label.layout"].browse(data.get("wizard_id")).exists()
         wizard.ensure_one()
-        dimensions = {
-            "dymo": (1, 1),
-            "2x7xprice": (2, 7),
-            "4x7xprice": (4, 7),
-            "4x12": (4, 12),
-            "4x12xprice": (4, 12),
-            "zpl": (4, 12),
-            "zplxprice": (4, 12),
-            "4x10xprice": (4, 10),
+        layouts = {
+            # format: (colonnes, lignes, hauteur imprimable en millimètres)
+            "dymo": (1, 1, 99.0),       # A7 : 105 - 2 x 3 mm
+            "2x7xprice": (2, 7, 204.0), # A5 : 210 - 2 x 3 mm
+            "4x7xprice": (4, 7, 291.0),
+            "4x12": (4, 12, 291.0),
+            "4x12xprice": (4, 12, 291.0),
+            "zpl": (1, 1, 142.5),       # A6 : 148,5 - 2 x 3 mm
+            "zplxprice": (1, 1, 142.5),
+            "4x10xprice": (4, 10, 291.0),
         }
-        columns, rows = dimensions[wizard.print_format]
+        columns, rows, page_height_mm = layouts[wizard.print_format]
         labels = [
             product
             for product in wizard.product_tmpl_ids
@@ -52,8 +53,7 @@ class ReportProductLabelCustom(models.AbstractModel):
             "price_included": "xprice" in wizard.print_format,
             "prices": prices,
             "currencies": currencies,
-            # La zone imprimable fait 291 mm (A4 moins 3 mm en haut et en bas).
-            # border-spacing ajoute un espace avant/après chaque ligne : le
-            # retirer ici garantit qu'une planche complète tient sur une page.
-            "label_height_mm": (291 - (rows + 1)) / rows,
+            "page_height_mm": page_height_mm,
+            # border-spacing ajoute un espace avant/après chaque ligne.
+            "label_height_mm": (page_height_mm - (rows + 1)) / rows,
         }

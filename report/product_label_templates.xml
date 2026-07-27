@@ -3,8 +3,8 @@
     <template id="report_product_label_custom">
         <t t-call="web.basic_layout">
             <t t-foreach="pages" t-as="page_rows">
-                <div class="page" style="box-sizing: border-box; height: 291mm; margin: 0; padding: 0;">
-                    <table style="border-collapse: separate; border-spacing: 1mm; height: 291mm; table-layout: fixed; width: 100%;">
+                <div class="page" t-att-style="'box-sizing: border-box; height: %.2fmm; margin: 0; padding: 0;' % page_height_mm">
+                    <table t-att-style="'border-collapse: separate; border-spacing: 1mm; height: %.2fmm; table-layout: fixed; width: 100%%;' % page_height_mm">
                         <t t-foreach="page_rows" t-as="label_row">
                             <tr>
                                 <t t-foreach="label_row" t-as="product">

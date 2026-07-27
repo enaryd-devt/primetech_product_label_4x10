@@ -1,4 +1,4 @@
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -31,6 +31,16 @@ class PrimetechProductLabelLayout(models.TransientModel):
     )
     pricelist_id = fields.Many2one("product.pricelist", string="Liste de prix")
     extra_html = fields.Html(string="Contenu supplémentaire")
+    format_filename = fields.Char(
+        string="Nom du fichier",
+        compute="_compute_format_filename",
+    )
+
+    @api.depends("print_format")
+    def _compute_format_filename(self):
+        labels = dict(self._fields["print_format"].selection)
+        for wizard in self:
+            wizard.format_filename = labels.get(wizard.print_format, "Étiquettes produits")
 
     def action_print(self):
         self.ensure_one()
@@ -38,8 +48,21 @@ class PrimetechProductLabelLayout(models.TransientModel):
             raise UserError(_("La quantité d'étiquettes doit être supérieure à zéro."))
         if not self.product_tmpl_ids:
             raise UserError(_("Sélectionnez au moins un produit."))
+        page_formats = {
+            "dymo": "A7",
+            "2x7xprice": "A5",
+            "4x7xprice": "A4",
+            "4x12": "A4",
+            "4x12xprice": "A4",
+            "zpl": "A6",
+            "zplxprice": "A6",
+            "4x10xprice": "A4",
+        }
         report = self.env["ir.actions.report"].search(
-            [("report_name", "=", "primetech_product_label_4x10.report_product_label_custom")],
+            [
+                ("report_name", "=", "primetech_product_label_4x10.report_product_label_custom"),
+                ("paperformat_id.format", "=", page_formats[self.print_format]),
+            ],
             limit=1,
         )
         if not report:
