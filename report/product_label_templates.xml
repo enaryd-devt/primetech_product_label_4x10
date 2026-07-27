@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Odoo's label renderer gives its table a physical width.  With some
+         wkhtmltopdf/Windows combinations that width starts at the left report
+         margin and overflows on the right.  Constraining the table to its page
+         makes the two side spaces equal without changing barcode alignment. -->
+    <template id="report_producttemplatelabel_center_4x10"
+              inherit_id="product.report_producttemplatelabel">
+        <xpath expr="//div[contains(@class, 'page')]" position="inside">
+            <t t-if="layout_wizard and layout_wizard.print_format == '4x10xprice'">
+                <style>
+                    .page {
+                        box-sizing: border-box;
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
+                    }
+                    .page &gt; table {
+                        box-sizing: border-box;
+                        left: 50%;
+                        margin-left: auto !important;
+                        margin-right: auto !important;
+                        position: relative;
+                        border-collapse: separate !important;
+                        border-spacing: 0.8mm 0.8mm !important;
+                        table-layout: fixed;
+                        -webkit-transform: translateX(-50%);
+                        transform: translateX(-50%);
+                        width: calc(100% - 8mm) !important;
+                    }
+                    .page &gt; table td {
+                        border: 0.2mm dashed #666 !important;
+                        padding: 1mm !important;
+                        vertical-align: middle !important;
+                    }
+                    .page &gt; table img[src*="/report/barcode"] {
+                        height: 9mm !important;
+                        max-width: 90% !important;
+                    }
+                </style>
+            </t>
+        </xpath>
+    </template>
+</odoo>
