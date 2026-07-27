@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_product_label_custom">
+        <t t-call="web.basic_layout">
+            <t t-foreach="pages" t-as="page_rows">
+                <div class="page" t-attf-style="box-sizing: border-box; height: {{ '%.2f' % page_height_mm }}mm; margin: 0; padding: 0;">
+                    <table class="table table-bordered" t-attf-style="border-collapse: separate !important; border-spacing: 1mm !important; height: {{ '%.2f' % page_height_mm }}mm !important; margin: 0 !important; table-layout: fixed !important; width: 100% !important;">
+                        <tbody>
+                        <t t-foreach="page_rows" t-as="label_row">
+                            <tr t-attf-style="height: {{ '%.2f' % label_height_mm }}mm !important;">
+                                <t t-foreach="label_row" t-as="product">
+                                    <td t-att-style="'box-sizing: border-box; height: %.2fmm !important; border: 0.25mm dashed #555 !important; border-radius: 0.8mm; padding: 1.2mm !important; text-align: center; vertical-align: middle !important; overflow: hidden; word-break: break-word;' % label_height_mm">
+                                        <t t-if="product">
+                                            <div style="font-size: 9pt; font-weight: 700; line-height: 1.1; max-height: 7mm; overflow: hidden;">
+                                                <span t-field="product.name"/>
+                                            </div>
+                                            <div t-if="product.default_code" style="font-size: 7pt; margin-top: 0.6mm;">
+                                                Réf. : <span t-field="product.default_code"/>
+                                            </div>
+                                            <div t-if="price_included" style="font-size: 9pt; font-weight: 700; margin-top: 0.8mm;">
+                                                <span t-out="prices[product.id]" t-options="{'widget': 'monetary', 'display_currency': currencies[product.id]}"/>
+                                            </div>
+                                            <div t-if="product.barcode" style="margin-top: 0.8mm; text-align: center;">
+                                                <img t-att-src="'/report/barcode/?barcode_type=Code128&amp;value=%s&amp;width=600&amp;height=180&amp;humanreadable=1' % product.barcode"
+                                                     style="height: 10mm; max-width: 95%;" alt="Code-barres"/>
+                                            </div>
+                                            <div t-if="not product.barcode" style="font-size: 7pt; margin-top: 2mm;">Aucun code-barres</div>
+                                            <div t-if="wizard.extra_html" style="font-size: 7pt; margin-top: 0.5mm;">
+                                                <span t-field="wizard.extra_html"/>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
