@@ -11,15 +11,19 @@
                 <style>
                     .page {
                         box-sizing: border-box;
-                        padding-left: 4mm !important;
-                        padding-right: 4mm !important;
+                        padding-left: 0 !important;
+                        padding-right: 0 !important;
                     }
                     .page &gt; table {
                         box-sizing: border-box;
+                        left: 50%;
                         margin-left: auto !important;
                         margin-right: auto !important;
+                        position: relative;
                         table-layout: fixed;
-                        width: 100% !important;
+                        -webkit-transform: translateX(-50%);
+                        transform: translateX(-50%);
+                        width: calc(100% - 8mm) !important;
                     }
                 </style>
             </t>
