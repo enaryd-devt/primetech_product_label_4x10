@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_product_label_custom">
+        <t t-call="web.basic_layout">
+            <t t-foreach="pages" t-as="page_rows">
+                <div class="page" style="box-sizing: border-box; height: 291mm; margin: 0; padding: 0;">
+                    <table style="border-collapse: separate; border-spacing: 1mm; height: 291mm; table-layout: fixed; width: 100%;">
+                        <t t-foreach="page_rows" t-as="label_row">
+                            <tr>
+                                <t t-foreach="label_row" t-as="product">
+                                    <td t-att-style="'box-sizing: border-box; height: %.2fmm; border: 0.2mm dashed #777; border-radius: 0.8mm; padding: 1.2mm; text-align: center; vertical-align: middle; overflow: hidden;' % label_height_mm">
+                                        <t t-if="product">
+                                            <div style="font-size: 9pt; font-weight: 700; line-height: 1.1; max-height: 7mm; overflow: hidden;">
+                                                <span t-field="product.name"/>
+                                            </div>
+                                            <div t-if="product.default_code" style="font-size: 7pt; margin-top: 0.6mm;">
+                                                Réf. : <span t-field="product.default_code"/>
+                                            </div>
+                                            <div t-if="price_included" style="font-size: 9pt; font-weight: 700; margin-top: 0.8mm;">
+                                                <span t-out="prices[product.id]" t-options="{'widget': 'monetary', 'display_currency': currencies[product.id]}"/>
+                                            </div>
+                                            <div t-if="product.barcode" style="margin-top: 0.8mm; text-align: center;">
+                                                <img t-att-src="'/report/barcode/?barcode_type=Code128&amp;value=%s&amp;width=600&amp;height=180&amp;humanreadable=1' % product.barcode"
+                                                     style="height: 10mm; max-width: 95%;" alt="Code-barres"/>
+                                            </div>
+                                            <div t-if="not product.barcode" style="font-size: 7pt; margin-top: 2mm;">Aucun code-barres</div>
+                                            <div t-if="wizard.extra_html" style="font-size: 7pt; margin-top: 0.5mm;">
+                                                <span t-field="wizard.extra_html"/>
+                                            </div>
+                                        </t>
+                                    </td>
+                                </t>
+                            </tr>
+                        </t>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
