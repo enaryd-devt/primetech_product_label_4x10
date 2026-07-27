@@ -1,0 +1,15 @@
+{
+    "name": "Product Labels 4 x 10 with Price",
+    "summary": "Print 40 marginless product labels with sales prices on A4 paper",
+    "version": "18.0.1.0.0",
+    "category": "Sales/Products",
+    "author": "PrimeTech",
+    "license": "LGPL-3",
+    "depends": ["product"],
+    "data": [
+        "report/product_label_paperformat.xml",
+        "report/product_label_report.xml",
+    ],
+    "installable": True,
+    "application": False,
+}
